@@ -8,7 +8,7 @@ pieces_at_bottom = []
 pygame.init()
 screen = pygame.display.set_mode((240, 440))
 game_over = False
-current_piece = Piece('s')
+current_piece = Piece('t')
 
 game_clock = time.time()
 
@@ -19,12 +19,13 @@ def draw_at_bottom():
 
 while not game_over:
         # each second of game
-        if time.time() - game_clock >= 1:
-            game_clock = time.time()
-            current_piece.move_down()
-            if current_piece.at_bottom:
-                pieces_at_bottom.append(current_piece)
-                current_piece = Piece(random.choice(piece_list))
+
+        # if time.time() - game_clock >= 1:
+        #     game_clock = time.time()
+        #     current_piece.move_down()
+        #     if current_piece.at_bottom:
+        #         pieces_at_bottom.append(current_piece)
+        #         current_piece = Piece(random.choice(piece_list))
 
         # start of event handling
         for event in pygame.event.get():

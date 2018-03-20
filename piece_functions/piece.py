@@ -22,7 +22,6 @@ class Piece:
 
         elif piece == 't':
             self.color = (169, 38, 251)
-            # self.points = ([100, 0], [100, 60], [120, 20], [120, 40], [120, 60], [120, 0])
             self.width = 20
             self.height = 60
             self.y1 = 20
@@ -71,43 +70,39 @@ class Piece:
             if self.x >= 240 - self.width or self.x >= 240 - self.width1:
                 pass
             else:
+                self.width, self.height = self.height, self.width
                 if self.rotate_amount == 0:
-                    self.width, self.height = self.height, self.width
                     self.rotate_amount += 1
                     self.x -= 20
                     self.x1 -= 20
                 elif self.rotate_amount == 1:
-                    self.width, self.height = self.height, self.width
                     self.x += 20
                     self.x1 -= 20
                     self.rotate_amount += 1
                 elif self.rotate_amount == 2:
-                    self.width, self.height = self.height, self.width
                     self.x -= 20
                     self.y1 -= 20
                     self.y += 20
                     self.x1 += 20
                     self.rotate_amount += 1
                 elif self.rotate_amount == 3:
-                    self.width, self.height = self.height, self.width
                     self.y1 += 20
                     self.y -= 20
                     self.x += 20
                     self.x1 += 20
                     self.rotate_amount = 0
+
         elif self.piece == 'z':
             if self.x >= 240 - self.height or self.x1 >= 240 - self.height1:
                 pass
             else:
+                self.width, self.height = self.height, self.width
+                self.width1, self.height1 = self.height1, self.width1
                 if self.rotated:
-                    self.width, self.height = self.height, self.width
-                    self.width1, self.height1 = self.height1, self.width1
                     self.x1 -= 20
                     self.x += 20
                     self.rotated = False
                 else:
-                    self.width, self.height = self.height, self.width
-                    self.width1, self.height1 = self.height1, self.width1
                     self.x1 += 20
                     self.x -= 20
                     self.rotated = True
@@ -116,15 +111,13 @@ class Piece:
             if self.x >= 240 - self.height or self.x1 >= 240 - self.height1:
                 pass
             else:
+                self.width, self.height = self.height, self.width
+                self.width1, self.height1 = self.height1, self.width1
                 if self.rotated:
-                    self.width, self.height = self.height, self.width
-                    self.width1, self.height1 = self.height1, self.width1
                     self.x1 += 20
                     self.x -= 20
                     self.rotated = False
                 else:
-                    self.width, self.height = self.height, self.width
-                    self.width1, self.height1 = self.height1, self.width1
                     self.x1 -= 20
                     self.x += 20
                     self.rotated = True
@@ -170,16 +163,14 @@ class Piece:
                 self.x1 += 20
 
     def move_down(self):
-        try:
+        if self.piece == 't' or self.piece == 's' or self.piece == 'z':
             if self.y + self.height >= 420 or self.y1 + self.height1 >= 420:
                 self.at_bottom = True
             else:
-                if self.piece == 'i' or self.piece == 'o':
-                    self.y += 20
-                elif self.piece == 't' or self.piece == 's' or self.piece == 'z':
+
                     self.y += 20
                     self.y1 += 20
-        except AttributeError:
+        if self.piece == 'i' or self.piece == 'o':
             if self.y + self.height >= 420:
                 self.at_bottom = True
             else:
