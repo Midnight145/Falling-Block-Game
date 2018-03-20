@@ -19,7 +19,7 @@ def draw_at_bottom():
 
 while not game_over:
         # each second of game
-        if time.time() - game_clock >= .1:
+        if time.time() - game_clock >= 1:
             game_clock = time.time()
             current_piece.move_down()
             if current_piece.at_bottom:
