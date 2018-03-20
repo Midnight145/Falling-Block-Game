@@ -32,7 +32,7 @@ class Piece:
             self.rotate_amount = 0
 
         elif piece == 's':
-            self.color = (169, 38, 251)
+            self.color = (41, 253, 47)
             self.width = 20
             self.height = 40
             self.x1 = 120
