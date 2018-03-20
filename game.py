@@ -3,12 +3,12 @@ import pygame
 import time
 import random
 
-piece_list = ['i', 'o', 't']
+piece_list = ['i', 'o', 't', 's', 'z']
 pieces_at_bottom = []
 pygame.init()
 screen = pygame.display.set_mode((240, 440))
 game_over = False
-current_piece = Piece('t')
+current_piece = Piece('s')
 
 game_clock = time.time()
 
