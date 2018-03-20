@@ -2,20 +2,27 @@ import pygame
 
 
 class Piece:
-    def __init__(self, piece, width, height):
-        self.x = 120
+    def __init__(self, piece):
         self.y = 0
         self.piece = piece
-        self.width = width
-        self.height = height
         if piece == 'i':
-            self.color = (0, 21, 255)
+            self.color = (0, 0, 255)
+            self.width = 20
+            self.height = 80
+            self.x = 100
+        elif piece == 'o':
+            self.color = (0, 255, 0)
+            self.width = 40
+            self.height = 40
+            self.x = 100
 
-    def draw(self, piece, screen, color, x, y, width, height):
-        if piece == 'i':
-            pygame.draw.rect(screen, color, pygame.Rect(x, y, width, height))
+    def draw(self, screen):
+        if self.piece == 'i' or self.piece == 'o':
+            pygame.draw.rect(screen, self.color, pygame.Rect(self.x, self.y, self.width, self.height))
 
-    def rotate(self, piece):
-        if piece == "i":
+    def rotate(self):
+        if self.piece == "i":
             self.width, self.height = self.height, self.width
             return self.width, self.height
+        elif self.piece == 'o':
+            pass
