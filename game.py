@@ -16,6 +16,7 @@ game_clock = time.time()
 
 debug = False
 
+move_time= 1
 
 def draw_at_bottom():
     for i in pieces_at_bottom:
@@ -25,7 +26,7 @@ while not game_over:
         # each second of game
         # Controls pieces moving down
         if not debug:
-            if time.time() - game_clock >= 1:
+            if time.time() - game_clock >= move_time:
                 game_clock = time.time()
                 current_piece.move_down()
                 if current_piece.at_bottom:
@@ -36,18 +37,18 @@ while not game_over:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_over = True
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_SPACE:
-                    debug = not debug
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_UP:
-                        current_piece.rotate()
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    current_piece.move_left()
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_RIGHT:
-                    current_piece.move_right()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                debug = not debug
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+                current_piece.rotate()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+                current_piece.move_left()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+                current_piece.move_right()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+                move_time = .07
+            if event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
+                move_time = 1
 
         screen.fill((0, 0, 0))
         draw_at_bottom()
