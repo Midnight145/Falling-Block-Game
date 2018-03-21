@@ -25,7 +25,7 @@ class Piece:
             self.width = 40
             self.height = 40
 
-        elif piece == 't'
+        elif piece == 't':
             # I'm drawing t, j, l, s, and z as 2 rects which is why y1, x1, width1, and height1 exist
             self.color = (169, 38, 251)
             self.width = 20
