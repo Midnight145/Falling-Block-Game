@@ -33,7 +33,7 @@ while not game_over:
                     current_piece = Piece(random.choice(piece_list))
 
         # start of event handling
-         for event in pygame.event.get():
+        for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_over = True
             if event.type == pygame.KEYUP:
