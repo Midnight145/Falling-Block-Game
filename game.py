@@ -10,7 +10,7 @@ screen = pygame.display.set_mode((240, 440))
 game_over = False
 # current_piece = Piece(random.choice(piece_list))
 
-current_piece = Piece('l')
+current_piece = Piece('i')
 
 game_clock = time.time()
 

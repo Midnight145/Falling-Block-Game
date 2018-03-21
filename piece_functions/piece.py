@@ -26,7 +26,7 @@ class Piece:
             self.height = 40
 
         elif piece == 't':
-            # I'm drawing t, j, l, s, and z as 2 rects which is why y1, x1, width1, and height1 exist
+            # I'm drawing t, j, l, s, and z as 2 rectangles which is why y1, x1, width1, and height1 exist
             self.color = (169, 38, 251)
             self.width = 20
             self.height = 60
@@ -90,10 +90,13 @@ class Piece:
     # Rotates the piece, this code is a mess.
     def rotate(self):
         if self.piece == 'i':
-            # Boundary check (broken for i, l, j)
-            if self.x >= 240 - self.height + 20 or self.x <= 20 - self.height + 20:
-                pass
-            else:
+            # Boundary check
+            if self.x + self.height > 240:
+                return False
+            elif not self.rotated:
+                if self.x - self.width < 20:
+                    return False
+            if self.rotated or not self.rotated:
                 self.width, self.height = self.height, self.width
                 if self.rotated:
                     self.x += 20
@@ -163,12 +166,13 @@ class Piece:
                     self.rotated = True
 
         elif self.piece == 'j':
-            # Boundary check (broken)
+            # Boundary check
             if self.x > 240 - self.height or self.x1 > 240 - self.height1:
                 pass
-            # elif 20 + self.height > self.x:
-            #    pass
-            else:
+            elif self.rotate_amount % 4 == 0 or self.rotate_amount % 4 == 2:
+                if self.x - self.width < 20 or self.x1 - self.width1 < 20:
+                    return False
+            if self.rotate_amount > -1:
                 self.width, self.height = self.height, self.width
                 self.width1, self.height1 = self.height1, self.width1
                 if self.rotate_amount % 4 == 0:
@@ -191,10 +195,13 @@ class Piece:
                 self.rotate_amount += 1
 
         elif self.piece == 'l':
-            # Boundary check (broken)
+            # Boundary check
             if self.x > 240 - self.height or self.x1 > 240 - self.height1:
                 pass
-            else:
+            elif self.rotate_amount % 4 == 0 or self.rotate_amount % 4 == 2:
+                if self.x - self.width < 20 or self.x1 - self.width1 < 20:
+                    return False
+            if self.rotate_amount > -1:
                 self.width, self.height = self.height, self.width
                 self.width1, self.height1 = self.height1, self.width1
                 if self.rotate_amount % 4 == 0:
@@ -214,7 +221,6 @@ class Piece:
                     self.x1 += 20
                     self.y1 -= 20
                     # self.y -= 40
-
 
                 self.rotate_amount += 1
 
