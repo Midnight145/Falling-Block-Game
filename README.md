@@ -2,11 +2,9 @@
 
 Known Bugs:
 
-I, L, and J pieces don't follow proper boundaries
+None
 
 To Do:
-
-Fix Boundaries
 
 Add Collision
 
