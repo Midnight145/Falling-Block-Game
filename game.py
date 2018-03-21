@@ -14,7 +14,7 @@ current_piece = Piece('l')
 
 game_clock = time.time()
 
-debug = True
+debug = False
 
 
 def draw_at_bottom():
@@ -23,6 +23,7 @@ def draw_at_bottom():
 
 while not game_over:
         # each second of game
+        # Controls pieces moving down
         if not debug:
             if time.time() - game_clock >= 1:
                 game_clock = time.time()
@@ -32,9 +33,12 @@ while not game_over:
                     current_piece = Piece(random.choice(piece_list))
 
         # start of event handling
-        for event in pygame.event.get():
+         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_over = True
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_SPACE:
+                    debug = not debug
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP:
                         current_piece.rotate()

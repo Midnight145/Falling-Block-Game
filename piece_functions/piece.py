@@ -3,15 +3,21 @@ import pygame
 
 class Piece:
     def __init__(self, piece):
+
+        # Variables that never change between piece to piece.
+
         self.y = 0
         self.x = 100
         self.piece = piece
         self.at_bottom = False
 
+        # Actual code to define each piece
+
         if piece == 'i':
             self.color = (45, 254, 254)
             self.width = 20
             self.height = 80
+            # Used later in a check
             self.rotated = False
 
         elif piece == 'o':
@@ -19,7 +25,8 @@ class Piece:
             self.width = 40
             self.height = 40
 
-        elif piece == 't':
+        elif piece == 't'
+            # I'm drawing t, j, l, s, and z as 2 rects which is why y1, x1, width1, and height1 exist
             self.color = (169, 38, 251)
             self.width = 20
             self.height = 60
@@ -27,6 +34,7 @@ class Piece:
             self.x1 = 120
             self.width1 = 20
             self.height1 = 20
+            # Exists for blocks with > 2 orientations
             self.rotate_amount = 0
 
         elif piece == 's':
@@ -71,6 +79,7 @@ class Piece:
             self.height1 = 20
             self.rotate_amount = 0
 
+    # Draws the piece to the screen
     def draw(self, screen):
         if self.piece == 'i' or self.piece == 'o':
             pygame.draw.rect(screen, self.color, pygame.Rect(self.x, self.y, self.width, self.height))
@@ -78,8 +87,10 @@ class Piece:
             pygame.draw.rect(screen, self.color, pygame.Rect(self.x, self.y, self.width, self.height))
             pygame.draw.rect(screen, self.color, pygame.Rect(self.x1, self.y1, self.width1, self.height1))
 
+    # Rotates the piece, this code is a mess.
     def rotate(self):
         if self.piece == 'i':
+            # Boundary check (broken for i, l, j)
             if self.x >= 240 - self.height + 20 or self.x <= 20 - self.height + 20:
                 pass
             else:
@@ -90,9 +101,12 @@ class Piece:
                 else:
                     self.x -= 20
                     self.rotated = True
+        # Doesn't need rotated, so I didn't bother.
         elif self.piece == 'o':
             pass
+
         elif self.piece == 't':
+            # Boundary check
             if self.x >= 240 - self.width or self.x >= 240 - self.width1:
                 pass
             else:
@@ -117,6 +131,7 @@ class Piece:
                 self.rotate_amount += 1
 
         elif self.piece == 'z':
+            # Boundary check
             if self.x >= 240 - self.height or self.x1 >= 240 - self.height1:
                 pass
             else:
@@ -132,6 +147,7 @@ class Piece:
                     self.rotated = True
 
         elif self.piece == 's':
+            # Boundary Check
             if self.x >= 240 - self.height or self.x1 >= 240 - self.height1:
                 pass
             else:
@@ -147,6 +163,7 @@ class Piece:
                     self.rotated = True
 
         elif self.piece == 'j':
+            # Boundary check (broken)
             if self.x > 240 - self.height or self.x1 > 240 - self.height1:
                 pass
             # elif 20 + self.height > self.x:
@@ -174,10 +191,9 @@ class Piece:
                 self.rotate_amount += 1
 
         elif self.piece == 'l':
+            # Boundary check (broken)
             if self.x > 240 - self.height or self.x1 > 240 - self.height1:
                 pass
-            # elif 20 + self.height > self.x:
-            #    pass
             else:
                 self.width, self.height = self.height, self.width
                 self.width1, self.height1 = self.height1, self.width1
@@ -242,3 +258,6 @@ class Piece:
             else:
                     self.y += 20
                     self.y1 += 20
+
+# TODO:
+# Fix Boundaries for I, J, L
