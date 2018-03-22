@@ -2,6 +2,8 @@
 
 Known Bugs:
 
+bottom boundary can be broken
+
 None
 
 To Do:

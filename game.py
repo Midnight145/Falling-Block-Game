@@ -16,7 +16,9 @@ game_clock = time.time()
 
 debug = False
 
-move_time= 1
+move_time = 1
+level = 1
+
 
 def draw_at_bottom():
     for i in pieces_at_bottom:
@@ -52,6 +54,6 @@ while not game_over:
 
         screen.fill((0, 0, 0))
         draw_at_bottom()
-        current_piece.draw(screen)
 
+        current_piece.draw(screen)
         pygame.display.flip()
