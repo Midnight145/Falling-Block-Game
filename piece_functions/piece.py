@@ -98,11 +98,12 @@ class Piece:
                     return False
             if self.rotated or not self.rotated:
                 self.width, self.height = self.height, self.width
-                if self.rotated:
+                if self.rotated and not self.at_bottom:
                     self.x += 20
                     self.rotated = False
-                else:
+                elif self.rotated and self.at_bottom:
                     self.x -= 20
+                    self.y -= 20
                     self.rotated = True
         # Doesn't need rotated, so I didn't bother.
         elif self.piece == 'o':
@@ -111,13 +112,17 @@ class Piece:
         elif self.piece == 't':
             # Boundary check
             if self.x >= 240 - self.width or self.x >= 240 - self.width1:
-                pass
+                return False
             else:
                 self.width, self.height = self.height, self.width
                 if self.rotate_amount % 4 == 0:
                     self.x -= 20
                     self.x1 -= 20
-                elif self.rotate_amount % 4 == 1:
+                if self.rotated_amount % 4 == 1 and self.at_bottom:
+                    self.x += 20
+                    self.x1 -= 20
+                    self.y -= 20
+                elif self.rotate_amount % 4 == 1 and not self.at_bottom:
                     self.x += 20
                     self.x1 -= 20
                 elif self.rotate_amount % 4 == 2:
@@ -125,8 +130,13 @@ class Piece:
                     self.y1 -= 20
                     self.y += 20
                     self.x1 += 20
-                elif self.rotate_amount % 4 == 3:
+                if self.rotated_amount % 4 == 3 and not self.at_bottom:
                     self.y1 += 20
+                    self.y -= 20
+                    self.x += 20
+                    self.x1 += 20
+                elif self.rotate_amount % 4 == 3 and self.at_bottom:
+                    # self.y1 += 20
                     self.y -= 20
                     self.x += 20
                     self.x1 += 20
@@ -136,11 +146,16 @@ class Piece:
         elif self.piece == 'z':
             # Boundary check
             if self.x >= 240 - self.height or self.x1 >= 240 - self.height1:
-                pass
+                return False
             else:
                 self.width, self.height = self.height, self.width
                 self.width1, self.height1 = self.height1, self.width1
-                if self.rotated:
+                if self.rotated and self.at_bottom:
+                    self.x1 -= 20
+                    self.x += 20
+                    self.y -= 20
+                    self.rotated = False
+                if self.rotated and not self.at_bottom:
                     self.x1 -= 20
                     self.x += 20
                     self.rotated = False
@@ -152,11 +167,16 @@ class Piece:
         elif self.piece == 's':
             # Boundary Check
             if self.x >= 240 - self.height or self.x1 >= 240 - self.height1:
-                pass
+                return False
             else:
                 self.width, self.height = self.height, self.width
                 self.width1, self.height1 = self.height1, self.width1
-                if self.rotated:
+                if self.rotated and self.at_bottom:
+                    self.x1 += 20
+                    self.x -= 20
+                    self.y -= 20
+                    self.rotated = False
+                elif self.rotated and not self.at_bottom:
                     self.x1 += 20
                     self.x -= 20
                     self.rotated = False
@@ -178,8 +198,11 @@ class Piece:
                 if self.rotate_amount % 4 == 0:
                     self.y1 += 20
                     self.x -= 20
-                elif self.rotate_amount % 4 == 1:
+                elif self.rotate_amount % 4 == 1 and not self.at_bottom:
                     self.y1 += 20
+                    self.x1 -= 20
+                    self.x += 40
+                elif self.rotate_amount % 4 == 1 and self.at_bottom:
                     self.x1 -= 20
                     self.x += 40
                 elif self.rotate_amount % 4 == 2:
@@ -187,10 +210,14 @@ class Piece:
                     self.y += 20
                     self.x1 -= 20
                     self.x -= 40
-                elif self.rotate_amount % 4 == 3:
+                elif self.rotate_amount % 4 == 3 and not self.at_bottom:
                     self.x += 20
                     self.x1 += 40
                     self.y -= 20
+                elif self.rotate_amount % 4 == 3 and self.at_bottom:
+                    self.x += 20
+                    self.x1 += 40
+                    self.y -= 40
 
                 self.rotate_amount += 1
 
@@ -266,4 +293,5 @@ class Piece:
                     self.y1 += 20
 
 # TODO:
-# Fix Boundaries for I, J, L
+# Test bottom boundaries
+# Combine bottom boundary checks into 1 if statement
