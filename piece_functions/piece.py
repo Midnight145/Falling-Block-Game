@@ -138,6 +138,7 @@ class Piece:
                     self.y += 20
 
                 self.rotate_amount += 1
+                return True
 
         # Doesn't need rotated, so I didn't bother.
         elif self.piece == 'o':
@@ -183,26 +184,21 @@ class Piece:
                 self.width, self.height = self.height, self.width
                 self.width1, self.height1 = self.height1, self.width1
                 if self.rotate_amount % 4 == 0:
-                    self.x += 20
-                    self.y += 20
-                    self.x1 += 20
-                    self.y1 -= 20
+                    self.x1 += 40
                 elif self.rotate_amount % 4 == 1:
-                    self.x -= 40
                     self.y += 20
+                    self.x1 -= 40
                     self.y1 += 20
                 elif self.rotate_amount % 4 == 2:
-                    self.x += 20
+                    self.x -= 20
                     self.y -= 20
-                    self.x1 -= 20
+                    self.x1 += 20
                     self.y1 -= 20
                 elif self.rotate_amount % 4 == 3:
-                    self.x1 += 20
-                    self.x -= 20
+                    self.x += 20
+                    self.x1 -= 20
 
                 self.rotate_amount += 1
-                # for debugging
-                # print((self.x, self.y), (self.x1, self.y1))
                 return True
 
         elif self.piece == 'z':
@@ -214,13 +210,17 @@ class Piece:
                 self.width, self.height = self.height, self.width
                 self.width1, self.height1 = self.height1, self.width1
                 if self.rotate_amount % 4 == 0:
+                    self.x += 40
+                elif self.rotate_amount % 4 == 1:
+                    self.x -= 40
+                    self.y += 20
+                    self.y1 += 20
+                elif self.rotate_amount % 4 == 2:
                     self.x += 20
                     self.y -= 20
+                    self.y1 -= 20
                     self.x1 -= 20
-                elif self.rotate_amount % 4 == 1:
-                    self.x += 20
-                    self.x1 -= 20
-                elif self.rotate_amount % 4 == 2:
+                elif self.rotate_amount % 4 == 3:
                     self.x -= 20
                     self.x1 += 20
 
