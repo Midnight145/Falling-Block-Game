@@ -13,7 +13,7 @@ current_piece = Piece(random.choice(piece_list))
 # current_piece = Piece('t')
 
 game_clock = time.time()
-
+moving_clock = time.time()
 debug = False
 
 move_time = 1
@@ -62,11 +62,17 @@ while not game_over:
                 if event.key == pygame.K_RIGHT:
                     moving_right = False
         if moving_left:
-            current_piece.move_left()
+            if time.time() - moving_clock >= .7:
+                moving_clock = time.time()
+                current_piece.move_left()
         if moving_right:
-            current_piece.move_right()
+            if time.time() - moving_clock >= .7:
+                moving_clock = time.time()
+                current_piece.move_right()
         if moving_down:
-            current_piece.move_down()
+            if time.time() - moving_clock >= .7:
+                moving_clock = time.time()
+                current_piece.move_down()
 
         screen.fill((0, 0, 0))
         draw_at_bottom()
