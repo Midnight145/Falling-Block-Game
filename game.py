@@ -18,6 +18,8 @@ debug = False
 
 move_time = 1
 level = 1
+moving_right = False
+moving_left = False
 
 
 def draw_at_bottom():
@@ -44,14 +46,27 @@ while not game_over:
             #     debug = not debug
             if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
                 current_piece.rotate()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
-                current_piece.move_left()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
-                current_piece.move_right()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
-                move_time = .07
-            if event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
-                move_time = 1
+                move_time = .7
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+                # current_piece.move_left()
+                moving_left = True
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+                # current_piece.move_right()
+                moving_right = True
+
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_DOWN:
+                    move_time = 1
+                if event.key == pygame.K_LEFT:
+                    moving_left = False
+                if event.key == pygame.K_RIGHT:
+                    moving_right = False
+        if moving_left:
+            current_piece.move_left()
+        if moving_right:
+            current_piece.move_right()
+
         screen.fill((0, 0, 0))
         draw_at_bottom()
         pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(0, 0, 20, 440), 0)
