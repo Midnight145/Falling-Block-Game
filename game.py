@@ -10,11 +10,11 @@ screen = pygame.display.set_mode((240, 440))
 game_over = False
 # current_piece = Piece(random.choice(piece_list))
 
-current_piece = Piece('i')
+current_piece = Piece('s')
 
 game_clock = time.time()
 
-debug = False
+debug = True
 
 move_time = 1
 level = 1
@@ -33,7 +33,7 @@ while not game_over:
                 current_piece.move_down()
                 if current_piece.at_bottom:
                     pieces_at_bottom.append(current_piece)
-                    current_piece = Piece(random.choice(piece_list))
+                    # current_piece = Piece(random.choice(piece_list))
 
         # start of event handling
         for event in pygame.event.get():
@@ -51,9 +51,10 @@ while not game_over:
                 move_time = .07
             if event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
                 move_time = 1
-
         screen.fill((0, 0, 0))
         draw_at_bottom()
-
+        pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(0, 0, 20, 440), 0)
+        pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(220, 0, 20, 440), 0)
+        pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(20, 420, 240, 20), 0)
         current_piece.draw(screen)
         pygame.display.flip()

@@ -7,7 +7,6 @@ class Piece:
         # Variables that never change between piece to piece.
 
         self.y = 0
-        self.x = 100
         self.piece = piece
         self.at_bottom = False
 
@@ -15,10 +14,11 @@ class Piece:
 
         if piece == 'i':
             self.color = (45, 254, 254)
-            self.width = 20
-            self.height = 80
+            self.width = 80
+            self.height = 20
+            self.x = 80
             # Used later in a check
-            self.rotated = False
+            self.rotate_amount = 0
 
         elif piece == 'o':
             self.color = (255, 253, 56)
@@ -28,35 +28,37 @@ class Piece:
         elif piece == 't':
             # I'm drawing t, j, l, s, and z as 2 rectangles which is why y1, x1, width1, and height1 exist
             self.color = (169, 38, 251)
-            self.width = 20
-            self.height = 60
-            self.y1 = 20
-            self.x1 = 120
+            self.width = 60
+            self.height = 20
+            self.y += 20
+            self.x = 80
+            self.y1 = 0
+            self.x1 = 100
             self.width1 = 20
             self.height1 = 20
-            # Exists for blocks with > 2 orientations
             self.rotate_amount = 0
 
         elif piece == 's':
             self.color = (41, 253, 47)
-            self.width = 20
-            self.height = 40
-            self.x1 = 120
+            self.width = 40
+            self.height = 20
+            self.x = 100
+            self.x1 = 80
             self.y1 = 20
-            self.width1 = 20
-            self.height1 = 40
-            self.rotated = False
+            self.width1 = 40
+            self.height1 = 20
+            self.rotate_amount = 0
 
         elif piece == 'z':
             self.color = (252, 13, 28)
-            self.width = 20
-            self.height = 40
-            self.x = 120
+            self.width = 40
+            self.height = 20
+            self.x = 80
             self.x1 = 100
             self.y1 = 20
-            self.width1 = 20
-            self.height1 = 40
-            self.rotated = False
+            self.width1 = 40
+            self.height1 = 20
+            self.rotate_amount = 0
 
         elif piece == 'j':
             self.color = (11, 36, 251)
@@ -91,20 +93,28 @@ class Piece:
     def rotate(self):
         if self.piece == 'i':
             # Boundary check
-            if self.x + self.height > 240:
-                return False
-            elif not self.rotated:
-                if self.x - self.width < 20:
-                    return False
-            if self.rotated or not self.rotated:
+            # if self.x + self.height > 240:
+            #     return False
+            # elif not self.rotated:
+            #     if self.x - self.width < 20:
+            #         return False
+            # if self.rotated or not self.rotated:
+            if 1 == 1:
                 self.width, self.height = self.height, self.width
-                if self.rotated and not self.at_bottom:
-                    self.x += 20
-                    self.rotated = False
-                elif self.rotated and self.at_bottom:
-                    self.x -= 20
+                if self.rotate_amount % 4 == 0:
+                    self.x += 40
                     self.y -= 20
-                    self.rotated = True
+                elif self.rotate_amount % 4 == 1:
+                    self.y += 40
+                    self.x -= 40
+                elif self.rotate_amount % 4 == 2:
+                    self.y -= 40
+                    self.x += 20
+                elif self.rotate_amount % 4 == 3:
+                    self.y += 20
+                    self.x -= 20
+                self.rotate_amount += 1
+
         # Doesn't need rotated, so I didn't bother.
         elif self.piece == 'o':
             pass
@@ -116,32 +126,57 @@ class Piece:
             else:
                 self.width, self.height = self.height, self.width
                 if self.rotate_amount % 4 == 0:
-                    self.x -= 20
-                    self.x1 -= 20
-                if self.rotated_amount % 4 == 1 and self.at_bottom:
                     self.x += 20
-                    self.x1 -= 20
                     self.y -= 20
-                elif self.rotate_amount % 4 == 1 and not self.at_bottom:
-                    self.x += 20
-                    self.x1 -= 20
-                elif self.rotate_amount % 4 == 2:
+                    self.x1 += 20
+                    self.y1 += 20
+                elif self.rotate_amount % 4 == 1:
                     self.x -= 20
+                    self.y += 20
+                    self.x1 -= 20
+                    self.y1 += 20
+                elif self.rotate_amount % 4 == 2:
+                    self.x += 20
                     self.y1 -= 20
+                    self.y -= 20
+                    self.x1 -= 20
+                elif self.rotate_amount % 4 == 3:
+                    self.x -= 20
                     self.y += 20
                     self.x1 += 20
-                if self.rotated_amount % 4 == 3 and not self.at_bottom:
-                    self.y1 += 20
-                    self.y -= 20
-                    self.x += 20
-                    self.x1 += 20
-                elif self.rotate_amount % 4 == 3 and self.at_bottom:
-                    # self.y1 += 20
-                    self.y -= 20
-                    self.x += 20
-                    self.x1 += 20
+                    self.y1 -= 20
 
                 self.rotate_amount += 1
+
+        elif self.piece == 's':
+            # Boundary Check
+            # if self.x >= 240 - self.height or self.x1 >= 240 - self.height1:
+            #     return False
+            # else:
+            if 1 == 1:
+
+                self.width, self.height = self.height, self.width
+                self.width1, self.height1 = self.height1, self.width1
+                if self.rotate_amount % 4 == 0:
+                    self.x += 20
+                    self.y += 20
+                    self.x1 += 20
+                    self.y1 -= 20
+                elif self.rotate_amount % 4 == 1:
+                    self.x -= 40
+                    self.y += 20
+                    self.y1 += 20
+                elif self.rotate_amount % 4 == 2:
+                    self.x += 20
+                    self.y -= 20
+                    self.x1 -= 20
+                    self.y1 -= 20
+                elif self.rotate_amount % 4 == 3:
+                    self.x1 += 20
+                    self.x -= 20
+
+                self.rotate_amount += 1
+                print((self.x, self.y), (self.x1, self.y1))
 
         elif self.piece == 'z':
             # Boundary check
@@ -150,40 +185,16 @@ class Piece:
             else:
                 self.width, self.height = self.height, self.width
                 self.width1, self.height1 = self.height1, self.width1
-                if self.rotated and self.at_bottom:
+                if self.rotate_amount % 4 == 0:
                     self.x1 -= 20
                     self.x += 20
                     self.y -= 20
-                    self.rotated = False
-                if self.rotated and not self.at_bottom:
+                elif self.rotate_amount % 4 == 1:
                     self.x1 -= 20
                     self.x += 20
-                    self.rotated = False
-                else:
+                elif self.rotate_amount % 4 == 2:
                     self.x1 += 20
                     self.x -= 20
-                    self.rotated = True
-
-        elif self.piece == 's':
-            # Boundary Check
-            if self.x >= 240 - self.height or self.x1 >= 240 - self.height1:
-                return False
-            else:
-                self.width, self.height = self.height, self.width
-                self.width1, self.height1 = self.height1, self.width1
-                if self.rotated and self.at_bottom:
-                    self.x1 += 20
-                    self.x -= 20
-                    self.y -= 20
-                    self.rotated = False
-                elif self.rotated and not self.at_bottom:
-                    self.x1 += 20
-                    self.x -= 20
-                    self.rotated = False
-                else:
-                    self.x1 -= 20
-                    self.x += 20
-                    self.rotated = True
 
         elif self.piece == 'j':
             # Boundary check
