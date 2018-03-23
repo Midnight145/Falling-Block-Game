@@ -3,18 +3,18 @@ import pygame
 import time
 import random
 
-piece_list = ['i', 'o', 't', 's', 'z']
+piece_list = ['i', 'o', 't', 's', 'z', 'l', 'j']
 pieces_at_bottom = []
 pygame.init()
 screen = pygame.display.set_mode((240, 440))
 game_over = False
-# current_piece = Piece(random.choice(piece_list))
+current_piece = Piece(random.choice(piece_list))
 
-current_piece = Piece('s')
+# current_piece = Piece('t')
 
 game_clock = time.time()
 
-debug = True
+debug = False
 
 move_time = 1
 level = 1
@@ -33,14 +33,15 @@ while not game_over:
                 current_piece.move_down()
                 if current_piece.at_bottom:
                     pieces_at_bottom.append(current_piece)
-                    # current_piece = Piece(random.choice(piece_list))
+                    current_piece = Piece(random.choice(piece_list))
 
         # start of event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_over = True
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                debug = not debug
+            # used for debugging
+            # if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            #     debug = not debug
             if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
                 current_piece.rotate()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
