@@ -10,7 +10,7 @@ screen = pygame.display.set_mode((240, 440))
 game_over = False
 current_piece = Piece(random.choice(piece_list))
 
-# current_piece = Piece('t')
+# current_piece = Piece('s')
 
 game_clock = time.time()
 moving_clock = time.time()
@@ -21,6 +21,7 @@ level = 1
 moving_right = False
 moving_left = False
 moving_down = False
+
 
 def draw_at_bottom():
     for i in pieces_at_bottom:
@@ -62,15 +63,15 @@ while not game_over:
                 if event.key == pygame.K_RIGHT:
                     moving_right = False
         if moving_left:
-            if time.time() - moving_clock >= .7:
+            if time.time() - moving_clock >= .15:
                 moving_clock = time.time()
                 current_piece.move_left()
         if moving_right:
-            if time.time() - moving_clock >= .7:
+            if time.time() - moving_clock >= .15:
                 moving_clock = time.time()
                 current_piece.move_right()
         if moving_down:
-            if time.time() - moving_clock >= .7:
+            if time.time() - moving_clock >= .07:
                 moving_clock = time.time()
                 current_piece.move_down()
 
