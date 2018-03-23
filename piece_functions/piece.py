@@ -59,12 +59,9 @@ class Piece:
     def draw(self, screen):
         if self.piece == 'i' or self.piece == 'o':
             pygame.draw.rect(screen, self.color, self.rect)
-        if self.piece == 't':
+        else:
             pygame.draw.rect(screen, self.color, self.rect)
             pygame.draw.rect(screen, self.color, self.rect1)
-        else:
-            pygame.draw.rect(screen, self.color, pygame.Rect(self.rect.x, self.rect.y, self.rect.width, self.rect.height))
-            pygame.draw.rect(screen, self.color, pygame.Rect(self.rect1.x, self.rect1.y, self.rect1.width, self.rect1.height))
 
     # Rotates the piece, this code is a mess.
     def rotate(self):
@@ -75,17 +72,13 @@ class Piece:
             if self.rotate_amount > -1:
                 self.rect.width, self.rect.height = self.rect.height, self.rect.width
                 if self.rotate_amount % 4 == 0:
-                    self.rect.x += 40
-                    self.rect.y -= 20
+                    self.rect.move_ip(40, -20)
                 elif self.rotate_amount % 4 == 1:
-                    self.rect.x -= 40
-                    self.rect.y += 40
+                    self.rect.move_ip(-40, 40)
                 elif self.rotate_amount % 4 == 2:
-                    self.rect.x += 20
-                    self.rect.y -= 40
+                    self.rect.move_ip(20, -40)
                 elif self.rotate_amount % 4 == 3:
-                    self.rect.x -= 20
-                    self.rect.y += 20
+                    self.rect.move_ip(-20, 20)
 
                 self.rotate_amount += 1
                 return True
@@ -102,25 +95,17 @@ class Piece:
             if self.rotate_amount > -1:
                 self.rect.width, self.rect.height = self.rect.height, self.rect.width
                 if self.rotate_amount % 4 == 0:
-                    self.rect.x += 20
-                    self.rect.y -= 20
-                    self.rect1.x += 20
-                    self.rect1.y += 20
+                    self.rect.move_ip(20, -20)
+                    self.rect1.move_ip(20, 20)
                 elif self.rotate_amount % 4 == 1:
-                    self.rect.x -= 20
-                    self.rect.y += 20
-                    self.rect1.x -= 20
-                    self.rect1.y += 20
+                    self.rect.move_ip(-20, 20)
+                    self.rect1.move_ip(-20, 20)
                 elif self.rotate_amount % 4 == 2:
-                    self.rect.x += 20
-                    self.rect.y -= 20
-                    self.rect1.x -= 20
-                    self.rect1.y -= 20
+                    self.rect.move_ip(20, -20)
+                    self.rect1.move_ip(-20, -20)
                 elif self.rotate_amount % 4 == 3:
-                    self.rect.x -= 20
-                    self.rect.y += 20
-                    self.rect1.x += 20
-                    self.rect1.y -= 20
+                    self.rect.move_ip(-20, 20)
+                    self.rect1.move_ip(20, -20)
 
                 self.rotate_amount += 1
                 return True
@@ -134,20 +119,17 @@ class Piece:
                 self.rect.width, self.rect.height = self.rect.height, self.rect.width
                 self.rect1.width, self.rect1.height = self.rect1.height, self.rect1.width
                 if self.rotate_amount % 4 == 0:
-                    self.rect1.x += 40
+                    self.rect1.move_ip(40, 0)
                 elif self.rotate_amount % 4 == 1:
-                    self.rect.y += 20
-                    self.rect1.x -= 40
-                    self.rect1.y += 20
+                    self.rect.move_ip(0, 20)
+                    self.rect1.move_ip(-40, 20)
                 elif self.rotate_amount % 4 == 2:
-                    self.rect.x -= 20
-                    self.rect.y -= 20
-                    self.rect1.x += 20
-                    self.rect1.y -= 20
+                    self.rect.move_ip(-20, -20)
+                    self.rect1.move_ip(20, -20)
                 elif self.rotate_amount % 4 == 3:
-                    self.rect.x += 20
-                    self.rect1.x -= 20
-
+                    self.rect.move_ip(20, 0)
+                    self.rect1.move_ip(-20, 0
+                                       )
                 self.rotate_amount += 1
                 return True
 
@@ -160,19 +142,16 @@ class Piece:
                 self.rect.width, self.rect.height = self.rect.height, self.rect.width
                 self.rect1.width, self.rect1.height = self.rect1.height, self.rect1.width
                 if self.rotate_amount % 4 == 0:
-                    self.rect.x += 40
+                    self.rect.move_ip(40, 0)
                 elif self.rotate_amount % 4 == 1:
-                    self.rect.x -= 40
-                    self.rect.y += 20
-                    self.rect1.y += 20
+                    self.rect.move_ip(-40, 20)
+                    self.rect1.move_ip(0, 20)
                 elif self.rotate_amount % 4 == 2:
-                    self.rect.x += 20
-                    self.rect.y -= 20
-                    self.rect1.y -= 20
-                    self.rect1.x -= 20
+                    self.rect.move_ip(20, -20)
+                    self.rect1.move_ip(-20, -20)
                 elif self.rotate_amount % 4 == 3:
-                    self.rect.x -= 20
-                    self.rect1.x += 20
+                    self.rect.move_ip(-20, 0)
+                    self.rect1.move_ip(20, 0)
 
                 self.rotate_amount += 1
                 return True
@@ -188,21 +167,17 @@ class Piece:
                 self.rect.width, self.rect.height = self.rect.height, self.rect.width
                 self.rect1.width, self.rect1.height = self.rect1.height, self.rect1.width
                 if self.rotate_amount % 4 == 0:
-                    self.rect.x += 20
-                    self.rect.y -= 20
-                    self.rect1.x += 40
+                    self.rect.move_ip(20, -20)
+                    self.rect1.move_ip(40, 0)
                 elif self.rotate_amount % 4 == 1:
-                    self.rect.x -= 20
-                    self.rect.y += 20
-                    self.rect1.y += 40
+                    self.rect.move_ip(-20, 20)
+                    self.rect1.move_ip(0, 40)
                 elif self.rotate_amount % 4 == 2:
-                    self.rect.x += 20
-                    self.rect.y -= 20
-                    self.rect1.x -= 40
+                    self.rect.move_ip(20, -20)
+                    self.rect1.move_ip(-40, 0)
                 elif self.rotate_amount % 4 == 3:
-                    self.rect.x -= 20
-                    self.rect.y += 20
-                    self.rect1.y -= 40
+                    self.rect.move_ip(-20, 20)
+                    self.rect1.move_ip(0, -40)
 
                 self.rotate_amount += 1
                 return True
@@ -218,21 +193,17 @@ class Piece:
                 self.rect.width, self.rect.height = self.rect.height, self.rect.width
                 self.rect1.width, self.rect1.height = self.rect1.height, self.rect1.width
                 if self.rotate_amount % 4 == 0:
-                    self.rect.x += 20
-                    self.rect.y -= 20
-                    self.rect1.y += 40
+                    self.rect.move_ip(20, -20)
+                    self.rect1.move_ip(0, 40)
                 elif self.rotate_amount % 4 == 1:
-                    self.rect.x -= 20
-                    self.rect.y += 20
-                    self.rect1.x -= 40
+                    self.rect.move_ip(-20, 20)
+                    self.rect1.move_ip(-40, 0)
                 elif self.rotate_amount % 4 == 2:
-                    self.rect.x += 20
-                    self.rect.y -= 20
-                    self.rect1.y -= 40
+                    self.rect.move_ip(20, -20)
+                    self.rect1.move_ip(0, -40)
                 elif self.rotate_amount % 4 == 3:
-                    self.rect.x -= 20
-                    self.rect.y += 20
-                    self.rect1.x += 40
+                    self.rect.move_ip(-20, 20)
+                    self.rect1.move_ip(40, 0)
 
                 self.rotate_amount += 1
                 return True
@@ -240,54 +211,48 @@ class Piece:
     def move_left(self):
         if self.piece == 'i' or self.piece == 'o':
             if self.rect.x <= 20:
-                pass
+                return False
             else:
-                self.rect.x -= 20
+                self.rect.move_ip(-20, 0)
 
         else:
             if self.rect.x <= 20 or self.rect1.x <= 20:
-                pass
+                return False
             else:
-                self.rect.x -= 20
-                self.rect1.x -= 20
+                self.rect.move_ip(-20, 0)
+                self.rect1.move_ip(-20, 0)
 
     def move_right(self):
         if self.piece == 'i' or self.piece == 'o':
             if self.rect.x >= 220 - self.rect.width:
-                pass
+                return False
             else:
-                self.rect.x += 20
+                self.rect.move_ip(20, 0)
         else:
             if self.rect1.x >= 220 - self.rect1.width or self.rect.x >= 220 - self.rect.width:
-                pass
+                return False
             else:
-                self.rect.x += 20
-                self.rect1.x += 20
+                self.rect.move_ip(20, 0)
+                self.rect1.move_ip(20, 0)
 
     def move_down(self):
-        # if self.piece == 'i' or self.piece == 'o':
-        #     if self.rect.y + self.rect.height >= 420:
-        #         self.at_bottom = True
-        #     else:
-        #             self.rect.y += 20
-
         if self.piece == 'i' or self.piece == 'o':
             if self.rect.y + self.rect.height >= 420:
                 self.at_bottom = True
             else:
-                self.rect.y += 20
+                self.rect.move_ip(0, 20)
         elif self.piece == 't':
             if self.rect.y + self.rect.height >= 420 or self.rect1.y + self.rect1.height >= 420:
                 self.at_bottom = True
             else:
-                    self.rect.y += 20
-                    self.rect1.y += 20
+                    self.rect.move_ip(0, 20)
+                    self.rect1.move_ip(0, 20)
         else:
             if self.rect.y + self.rect.height >= 420 or self.rect1.y + self.rect1.height >= 420:
                 self.at_bottom = True
             else:
-                    self.rect.y += 20
-                    self.rect1.y += 20
+                    self.rect.move_ip(0, 20)
+                    self.rect1.move_ip(0, 20)
 
 # TODO:
 # Test bottom boundaries

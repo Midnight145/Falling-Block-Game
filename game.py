@@ -11,9 +11,9 @@ pieces_at_bottom = []
 pygame.init()
 screen = pygame.display.set_mode((240, 440))
 game_over = False
-current_piece = Piece(random.choice(piece_list))
+# current_piece = Piece(random.choice(piece_list))
 
-# current_piece = Piece('l')
+current_piece = Piece('l')
 
 debug = False
 
@@ -45,8 +45,8 @@ while not game_over:
             if event.type == pygame.QUIT:
                 game_over = True
             # used for debugging
-            # if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            #     debug = not debug
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                debug = not debug
             if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
                 current_piece.rotate()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
