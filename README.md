@@ -2,7 +2,7 @@
 
 Known Bugs:
 
-~~all boundaries broken~~
+all boundaries broken when rotating (including pieces)
 
 To Do:
 
