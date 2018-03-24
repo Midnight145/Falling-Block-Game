@@ -6,13 +6,13 @@ import random
 game_clock = time.time()
 moving_clock = time.time()
 
-piece_list = [IPiece, OPiece, TPiece, SPiece, ZPiece, JPiece, LPiece]
+piece_list = [IPiece(), OPiece(), TPiece(), SPiece(), ZPiece(), JPiece(), LPiece()]
 pieces_at_bottom = []
 pygame.init()
 screen = pygame.display.set_mode((240, 440))
 game_over = False
-# current_piece = random.choice(piece_list)
-current_piece = OPiece
+current_piece = random.choice(piece_list)
+# current_piece = OPiece()
 
 debug = False
 
@@ -39,7 +39,7 @@ while not game_over:
                     current_piece.move_down()
                 if current_piece.at_bottom:
                     pieces_at_bottom.append(current_piece)
-                    current_piece = Piece(random.choice(piece_list))
+                    current_piece = random.choice(piece_list)
 
         # start of event handling
         for event in pygame.event.get():
@@ -75,6 +75,9 @@ while not game_over:
         if moving_down:
             if time.time() - moving_clock >= .07:
                 moving_clock = time.time()
+                if current_piece.at_bottom:
+                    pieces_at_bottom.append(current_piece)
+                    current_piece = random.choice(piece_list)
                 current_piece.move_down()
 
         screen.fill((0, 0, 0))

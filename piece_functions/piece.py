@@ -3,15 +3,22 @@ import pygame
 
 class Piece:
 
+    # Variables that never change between piece to piece.
+
+    at_bottom = False
+    lock = False
+    # Used later in a check
+    rotate_amount = 0
+
     def __init__(self):
-
-        # Variables that never change between piece to piece.
-
-        self.piece = piece
-        self.at_bottom = False
-        self.lock = False
-        # Used later in a check
-        self.rotate_amount = 0
+        #
+        # # Variables that never change between piece to piece.
+        #
+        # self.at_bottom = False
+        # self.lock = False
+        # # Used later in a check
+        # self.rotate_amount = 0
+        pass
 
         # # Actual code to define each piece
         #
