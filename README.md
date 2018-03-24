@@ -2,7 +2,7 @@
 
 Known Bugs:
 
-all boundaries broken, z, s rotation broken
+all boundaries broken
 
 To Do:
 
