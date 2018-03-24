@@ -1,33 +1,27 @@
 from piece_functions.piece import *
 import pygame
 import time
-import random
 
 game_clock = time.time()
 moving_clock = time.time()
 
-piece_list = [IPiece(), OPiece(), TPiece(), SPiece(), ZPiece(), JPiece(), LPiece()]
+boundaries = [pygame.Rect(0, 0, 20, 440), pygame.Rect(220, 0, 20, 440), pygame.Rect(20, 420, 240, 20)]
+
+piece_list = ['i', 'o', 't', 's', 'z', 'j', 'l']
+
 pieces_at_bottom = []
 pygame.init()
 screen = pygame.display.set_mode((240, 440))
 game_over = False
-current_piece = random.choice(piece_list)
-# current_piece = OPiece()
+current_piece = choose_piece(piece_list)
 
 debug = False
-
-print(current_piece)
 
 move_time = 1
 level = 1
 moving_right = False
 moving_left = False
 moving_down = False
-
-
-def draw_at_bottom():
-    for i in pieces_at_bottom:
-        i.draw(screen)
 
 while not game_over:
         # each second of game
@@ -36,10 +30,12 @@ while not game_over:
             if time.time() - game_clock >= move_time:
                 if not moving_down:
                     game_clock = time.time()
-                    current_piece.move_down()
-                if current_piece.at_bottom:
-                    pieces_at_bottom.append(current_piece)
-                    current_piece = random.choice(piece_list)
+
+                current_piece.move_down(boundaries)
+
+        if current_piece.lock:
+            pieces_at_bottom.append(current_piece)
+            current_piece = choose_piece(piece_list)
 
         # start of event handling
         for event in pygame.event.get():
@@ -67,24 +63,20 @@ while not game_over:
         if moving_left:
             if time.time() - moving_clock >= .15:
                 moving_clock = time.time()
-                current_piece.move_left()
+                current_piece.move_left(boundaries)
         if moving_right:
             if time.time() - moving_clock >= .15:
                 moving_clock = time.time()
-                current_piece.move_right()
+                current_piece.move_right(boundaries)
         if moving_down:
             if time.time() - moving_clock >= .07:
                 moving_clock = time.time()
-                if current_piece.at_bottom:
-                    pieces_at_bottom.append(current_piece)
-                    current_piece = random.choice(piece_list)
-                current_piece.move_down()
+                current_piece.move_down(boundaries)
 
         screen.fill((0, 0, 0))
-
-        draw_at_bottom()
-        pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(0, 0, 20, 440), 0)
-        pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(220, 0, 20, 440), 0)
-        pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(20, 420, 240, 20), 0)
+        draw_at_bottom(screen, pieces_at_bottom)
+        pygame.draw.rect(screen, (255, 255, 255), boundaries[0], 0)
+        pygame.draw.rect(screen, (255, 255, 255), boundaries[1], 0)
+        pygame.draw.rect(screen, (255, 255, 255), boundaries[2], 0)
         current_piece.draw(screen)
         pygame.display.flip()
