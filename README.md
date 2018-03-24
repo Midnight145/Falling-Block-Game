@@ -13,5 +13,3 @@ Add Collision
 Add Line Clears
 
 Add Score
-
-Change the move functions to pygame.Rect.move
