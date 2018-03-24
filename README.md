@@ -2,7 +2,9 @@
 
 Known Bugs:
 
-all boundaries broken
+~~all boundaries broken~~
+
+almost everything is broken
 
 To Do:
 
