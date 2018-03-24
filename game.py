@@ -1,4 +1,4 @@
-from piece_functions.piece import Piece
+from piece_functions.piece import *
 import pygame
 import time
 import random
@@ -6,15 +6,13 @@ import random
 game_clock = time.time()
 moving_clock = time.time()
 
-piece_list = ['i', 'o', 't', 's', 'z', 'l', 'j']
-rects_at_bottom = []
+piece_list = [IPiece, OPiece, TPiece, SPiece, ZPiece, JPiece, LPiece]
 pieces_at_bottom = []
 pygame.init()
 screen = pygame.display.set_mode((240, 440))
 game_over = False
-# current_piece = Piece(random.choice(piece_list))
-
-current_piece = Piece('l')
+# current_piece = random.choice(piece_list)
+current_piece = OPiece
 
 debug = False
 
@@ -40,7 +38,6 @@ while not game_over:
                     game_clock = time.time()
                     current_piece.move_down()
                 if current_piece.at_bottom:
-                    rects_at_bottom.append(current_piece)
                     pieces_at_bottom.append(current_piece)
                     current_piece = Piece(random.choice(piece_list))
 
@@ -79,26 +76,9 @@ while not game_over:
             if time.time() - moving_clock >= .07:
                 moving_clock = time.time()
                 current_piece.move_down()
-        try:
-            if (current_piece.rect.collidelist(rects_at_bottom) > -1 and len(rects_at_bottom) != 0 or
-                    current_piece.rect1.collidelist(rects_at_bottom) > -1 and len(rects_at_bottom) != 0):
-                current_piece.at_bottom = True
-                current_piece.rect.move_ip(0, -20)
-                try:
-                    current_piece.rect1.move_ip(0, -20)
-                except AttributeError:
-                    pass
-                rects_at_bottom.append(current_piece.rect)
-                try:
-                    rects_at_bottom.append(current_piece.rect1)
-                except AttributeError:
-                    pass
-
-        except AttributeError:
-            # pieces_at_bottom.append(current_piece)
-            pass
 
         screen.fill((0, 0, 0))
+
         draw_at_bottom()
         pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(0, 0, 20, 440), 0)
         pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(220, 0, 20, 440), 0)
