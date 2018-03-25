@@ -7,7 +7,6 @@ things_at_bottom = []
 class Piece:
     # Variables that never change between piece to piece.
 
-    at_bottom = False
     lock = False
     # Used later in a check
     rotate_amount = 0
@@ -215,7 +214,6 @@ class IPiece(Piece):
             return True
         else:
             self.rect.move_ip(0, -20)
-            self.at_bottom = True
             things_at_bottom.append(self.rect)
             self.lock = True
             return False
@@ -252,7 +250,6 @@ class OPiece(Piece):
             return True
         else:
             self.rect.move_ip(0, -20)
-            self.at_bottom = True
             things_at_bottom.append(self.rect)
             self.lock = True
             return False
@@ -316,7 +313,6 @@ class TPiece(Piece):
         else:
             self.rect.move_ip(0, -20)
             self.rect1.move_ip(0, -20)
-            self.at_bottom = True
             self.lock = True
             things_at_bottom.append(self.rect)
             things_at_bottom.append(self.rect1)
@@ -405,7 +401,6 @@ class SPiece(Piece):
         else:
             self.rect.move_ip(0, -20)
             self.rect1.move_ip(0, -20)
-            self.at_bottom = True
             self.lock = True
             things_at_bottom.append(self.rect)
             things_at_bottom.append(self.rect1)
@@ -495,7 +490,6 @@ class ZPiece(Piece):
         else:
             self.rect.move_ip(0, -20)
             self.rect1.move_ip(0, -20)
-            self.at_bottom = True
             self.lock = True
             things_at_bottom.append(self.rect)
             things_at_bottom.append(self.rect1)
@@ -588,7 +582,6 @@ class JPiece(Piece):
         else:
             self.rect.move_ip(0, -20)
             self.rect1.move_ip(0, -20)
-            # self.at_bottom = True
             self.lock = True
             things_at_bottom.append(self.rect)
             things_at_bottom.append(self.rect1)
@@ -681,7 +674,6 @@ class LPiece(Piece):
         else:
             self.rect.move_ip(0, -20)
             self.rect1.move_ip(0, -20)
-            self.at_bottom = True
             self.lock = True
             things_at_bottom.append(self.rect)
             things_at_bottom.append(self.rect1)
