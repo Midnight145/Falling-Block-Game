@@ -20,146 +20,6 @@ class Piece:
 
     # Rotates the piece, this code is a mess.
     def rotate(self):
-        # if self.piece == 'i':
-        #     # Boundary check
-        #     # if self.rect.x + self.rect.height > 240:
-        #     #     return False
-        #     if self.rotate_amount > -1:
-        #         self.rect.width, self.rect.height = self.rect.height, self.rect.width
-        #         if self.rotate_amount % 4 == 0:
-        #             self.rect.move_ip(40, -20)
-        #         elif self.rotate_amount % 4 == 1:
-        #             self.rect.move_ip(-40, 40)
-        #         elif self.rotate_amount % 4 == 2:
-        #             self.rect.move_ip(20, -40)
-        #         elif self.rotate_amount % 4 == 3:
-        #             self.rect.move_ip(-20, 20)
-        #
-        #         self.rotate_amount += 1
-        #         return True
-        #
-        # # Doesn't need rotated, so I didn't bother.
-        # elif self.piece == 'o':
-        #     pass
-        #
-        # elif self.piece == 't':
-        #     # Boundary check
-        #     # if self.rect.x >= 240 - self.rect.width or self.rect.x >= 240 - self.rect1.width:
-        #     #     return False
-        #     # else:
-        #     if self.rotate_amount > -1:
-        #         self.rect.width, self.rect.height = self.rect.height, self.rect.width
-        #         if self.rotate_amount % 4 == 0:
-        #             self.rect.move_ip(20, -20)
-        #             self.rect1.move_ip(20, 20)
-        #         elif self.rotate_amount % 4 == 1:
-        #             self.rect.move_ip(-20, 20)
-        #             self.rect1.move_ip(-20, 20)
-        #         elif self.rotate_amount % 4 == 2:
-        #             self.rect.move_ip(20, -20)
-        #             self.rect1.move_ip(-20, -20)
-        #         elif self.rotate_amount % 4 == 3:
-        #             self.rect.move_ip(-20, 20)
-        #             self.rect1.move_ip(20, -20)
-        #
-        #         self.rotate_amount += 1
-        #         return True
-        #
-        # elif self.piece == 's':
-        #     # Boundary Check
-        #     # if self.rect.x >= 240 - self.rect.height or self.rect1.x >= 240 - self.rect1.height:
-        #     #     return False
-        #     # else:
-        #     if self.rotate_amount > -1:
-        #         self.rect.width, self.rect.height = self.rect.height, self.rect.width
-        #         self.rect1.width, self.rect1.height = self.rect1.height, self.rect1.width
-        #         if self.rotate_amount % 4 == 0:
-        #             self.rect1.move_ip(40, 0)
-        #         elif self.rotate_amount % 4 == 1:
-        #             self.rect.move_ip(0, 20)
-        #             self.rect1.move_ip(-40, 20)
-        #         elif self.rotate_amount % 4 == 2:
-        #             self.rect.move_ip(-20, -20)
-        #             self.rect1.move_ip(20, -20)
-        #         elif self.rotate_amount % 4 == 3:
-        #             self.rect.move_ip(20, 0)
-        #             self.rect1.move_ip(-20, 0)
-        #         self.rotate_amount += 1
-        #         return True
-        #
-        # elif self.piece == 'z':
-        #     # Boundary check
-        #     # if self.rect.x >= 240 - self.rect.height or self.rect1.x >= 240 - self.rect1.height:
-        #     #     return False
-        #     # else:
-        #     if self.rotate_amount > -1:
-        #         self.rect.width, self.rect.height = self.rect.height, self.rect.width
-        #         self.rect1.width, self.rect1.height = self.rect1.height, self.rect1.width
-        #         if self.rotate_amount % 4 == 0:
-        #             self.rect.move_ip(40, 0)
-        #         elif self.rotate_amount % 4 == 1:
-        #             self.rect.move_ip(-40, 20)
-        #             self.rect1.move_ip(0, 20)
-        #         elif self.rotate_amount % 4 == 2:
-        #             self.rect.move_ip(20, -20)
-        #             self.rect1.move_ip(-20, -20)
-        #         elif self.rotate_amount % 4 == 3:
-        #             self.rect.move_ip(-20, 0)
-        #             self.rect1.move_ip(20, 0)
-        #
-        #         self.rotate_amount += 1
-        #
-        # elif self.piece == 'j':
-        #     # Boundary check
-        #     # if self.rect.x > 240 - self.rect.height or self.rect1.x > 240 - self.rect1.height:
-        #     #     pass
-        #     # elif self.rotate_amount % 4 == 0 or self.rotate_amount % 4 == 2:
-        #     #     if self.rect.x - self.rect.width < 20 or self.rect1.x - self.rect1.width < 20:
-        #     #         return False
-        #     if self.rotate_amount > -1:
-        #         self.rect.width, self.rect.height = self.rect.height, self.rect.width
-        #         self.rect1.width, self.rect1.height = self.rect1.height, self.rect1.width
-        #         if self.rotate_amount % 4 == 0:
-        #             self.rect.move_ip(20, -20)
-        #             self.rect1.move_ip(40, 0)
-        #         elif self.rotate_amount % 4 == 1:
-        #             self.rect.move_ip(-20, 20)
-        #             self.rect1.move_ip(0, 40)
-        #         elif self.rotate_amount % 4 == 2:
-        #             self.rect.move_ip(20, -20)
-        #             self.rect1.move_ip(-40, 0)
-        #         elif self.rotate_amount % 4 == 3:
-        #             self.rect.move_ip(-20, 20)
-        #             self.rect1.move_ip(0, -40)
-        #
-        #         self.rotate_amount += 1
-        #         return True
-        #
-        # elif self.piece == 'l':
-        #     # Boundary check
-        #     # if self.rect.x > 240 - self.rect.height or self.rect1.x > 240 - self.rect1.height:
-        #     #     pass
-        #     # elif self.rotate_amount % 4 == 0 or self.rotate_amount % 4 == 2:
-        #     #     if self.rect.x - self.rect.width < 20 or self.rect1.x - self.rect1.width < 20:
-        #     #         return False
-        #     if self.rotate_amount > -1:
-        #         self.rect.width, self.rect.height = self.rect.height, self.rect.width
-        #         self.rect1.width, self.rect1.height = self.rect1.height, self.rect1.width
-        #         if self.rotate_amount % 4 == 0:
-        #             self.rect.move_ip(20, -20)
-        #             self.rect1.move_ip(0, 40)
-        #         elif self.rotate_amount % 4 == 1:
-        #             self.rect.move_ip(-20, 20)
-        #             self.rect1.move_ip(-40, 0)
-        #         elif self.rotate_amount % 4 == 2:
-        #             self.rect.move_ip(20, -20)
-        #             self.rect1.move_ip(0, -40)
-        #         elif self.rotate_amount % 4 == 3:
-        #             self.rect.move_ip(-20, 20)
-        #             self.rect1.move_ip(40, 0)
-        #
-        #         self.rotate_amount += 1
-        #         return True
         pass
 
     def move_left(self, boundaries, piece):
@@ -349,27 +209,6 @@ class SPiece(Piece):
                 self.rect1.move_ip(-20, 0)
             self.rotate_amount += 1
 
-    # def move_left(self):
-    #     if self.rect.x <= 20 or self.rect1.x <= 20:
-    #         pass
-    #     else:
-    #         self.rect.move_ip(-20, 0)
-    #         self.rect1.move_ip(-20, 0)
-    #
-    # def move_right(self):
-    #     if self.rect1.x >= 220 - self.rect1.width or self.rect.x >= 220 - self.rect.width:
-    #         pass
-    #     else:
-    #         self.rect.move_ip(20, 0)
-    #         self.rect1.move_ip(20, 0)
-    #
-    # def move_down(self):
-    #     if self.rect.y + self.rect.height >= 420 or self.rect1.y + self.rect1.height >= 420:
-    #         self.at_bottom = True
-    #     else:
-    #         self.rect.move_ip(0, 20)
-    #         self.rect1.move_ip(0, 20)
-
     def move_left(self, boundaries):
         self.rect.move_ip(-20, 0)
         self.rect1.move_ip(-20, 0)
@@ -437,27 +276,6 @@ class ZPiece(Piece):
                 self.rect1.move_ip(20, 0)
 
             self.rotate_amount += 1
-
-    # def move_left(self):
-    #     if self.rect.x <= 20 or self.rect1.x <= 20:
-    #         pass
-    #     else:
-    #         self.rect.move_ip(-20, 0)
-    #         self.rect1.move_ip(-20, 0)
-    #
-    # def move_right(self):
-    #     if self.rect1.x >= 220 - self.rect1.width or self.rect.x >= 220 - self.rect.width:
-    #         pass
-    #     else:
-    #         self.rect.move_ip(20, 0)
-    #         self.rect1.move_ip(20, 0)
-    #
-    # def move_down(self):
-    #     if self.rect.y + self.rect.height >= 420 or self.rect1.y + self.rect1.height >= 420:
-    #         self.at_bottom = True
-    #     else:
-    #         self.rect.move_ip(0, 20)
-    #         self.rect1.move_ip(0, 20)
 
     def move_left(self, boundaries):
         self.rect.move_ip(-20, 0)
@@ -530,27 +348,6 @@ class JPiece(Piece):
 
             self.rotate_amount += 1
 
-    # def move_left(self):
-    #     if self.rect.x <= 20 or self.rect1.x <= 20:
-    #         pass
-    #     else:
-    #         self.rect.move_ip(-20, 0)
-    #         self.rect1.move_ip(-20, 0)
-    #
-    # def move_right(self):
-    #     if self.rect1.x >= 220 - self.rect1.width or self.rect.x >= 220 - self.rect.width:
-    #         pass
-    #     else:
-    #         self.rect.move_ip(20, 0)
-    #         self.rect1.move_ip(20, 0)
-    #
-    # def move_down(self):
-    #     if self.rect.y + self.rect.height >= 420 or self.rect1.y + self.rect1.height >= 420:
-    #         self.at_bottom = True
-    #     else:
-    #         self.rect.move_ip(0, 20)
-    #         self.rect1.move_ip(0, 20)
-
     def move_left(self, boundaries):
         self.rect.move_ip(-20, 0)
         self.rect1.move_ip(-20, 0)
@@ -621,27 +418,6 @@ class LPiece(Piece):
                 self.rect1.move_ip(40, 0)
 
             self.rotate_amount += 1
-
-    # def move_left(self):
-    #     if self.rect.x <= 20 or self.rect1.x <= 20:
-    #         pass
-    #     else:
-    #         self.rect.move_ip(-20, 0)
-    #         self.rect1.move_ip(-20, 0)
-    #
-    # def move_right(self):
-    #     if self.rect1.x >= 220 - self.rect1.width or self.rect.x >= 220 - self.rect.width:
-    #         pass
-    #     else:
-    #         self.rect.move_ip(20, 0)
-    #         self.rect1.move_ip(20, 0)
-    #
-    # def move_down(self):
-    #     if self.rect.y + self.rect.height >= 420 or self.rect1.y + self.rect1.height >= 420:
-    #         self.at_bottom = True
-    #     else:
-    #         self.rect.move_ip(0, 20)
-    #         self.rect1.move_ip(0, 20)
 
     def move_left(self, boundaries):
         self.rect.move_ip(-20, 0)
