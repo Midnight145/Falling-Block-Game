@@ -75,8 +75,10 @@ while not game_over:
 
         screen.fill((0, 0, 0))
         draw_at_bottom(screen, pieces_at_bottom)
-        pygame.draw.rect(screen, (255, 255, 255), boundaries[0], 0)
-        pygame.draw.rect(screen, (255, 255, 255), boundaries[1], 0)
-        pygame.draw.rect(screen, (255, 255, 255), boundaries[2], 0)
+        for i in range(len(boundaries)):
+            pygame.draw.rect(screen, (255, 255, 255), boundaries[i], 0)
+        # pygame.draw.rect(screen, (255, 255, 255), boundaries[0], 0)
+        # pygame.draw.rect(screen, (255, 255, 255), boundaries[1], 0)
+        # pygame.draw.rect(screen, (255, 255, 255), boundaries[2], 0)
         current_piece.draw(screen)
         pygame.display.flip()
