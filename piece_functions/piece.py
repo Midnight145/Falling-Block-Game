@@ -5,14 +5,13 @@ things_at_bottom = []
 
 
 class Piece:
-    # Variables that never change between piece to piece.
-
-    lock = False
-    # Used later in a check
-    rotate_amount = 0
 
     def __init__(self):
-        pass
+        # Variables that never change between piece to piece.
+
+        self.lock = False
+        # Used later in a check
+        self.rotate_amount = 0
 
     # Draws the piece to the screen
     def draw(self, screen):
@@ -34,6 +33,7 @@ class Piece:
 
 class IPiece(Piece):
     def __init__(self):
+        super().__init__()
         self.rect = pygame.Rect(80, 0, 80, 20)
         self.color = (45, 254, 254)
 
@@ -81,6 +81,7 @@ class IPiece(Piece):
 
 class OPiece(Piece):
     def __init__(self):
+        super().__init__()
         self.rect = pygame.Rect(100, 0, 40, 40)
         self.color = (255, 253, 56)
 
@@ -117,6 +118,7 @@ class OPiece(Piece):
 
 class TPiece(Piece):
     def __init__(self):
+        super().__init__()
         self.rect = pygame.Rect(80, 20, 60, 20)
         self.rect1 = pygame.Rect(100, 0, 20, 20)
         self.color = (169, 38, 251)
@@ -180,6 +182,7 @@ class TPiece(Piece):
 
 class SPiece(Piece):
     def __init__(self):
+        super().__init__()
         self.rect = pygame.Rect(100, 0, 40, 20)
         self.rect1 = pygame.Rect(80, 20, 40, 20)
         self.color = (41, 253, 47)
@@ -189,10 +192,6 @@ class SPiece(Piece):
         pygame.draw.rect(screen, self.color, self.rect1)
 
     def rotate(self):
-        # Boundary Check
-        # if self.rect.x >= 240 - self.rect.height or self.rect1.x >= 240 - self.rect1.height:
-        #     return False
-        # else:
         if self.rotate_amount > -1:
             self.rect.width, self.rect.height = self.rect.height, self.rect.width
             self.rect1.width, self.rect1.height = self.rect1.height, self.rect1.width
@@ -247,6 +246,7 @@ class SPiece(Piece):
 
 class ZPiece(Piece):
     def __init__(self):
+        super().__init__()
         self.rect = pygame.Rect(80, 0, 40, 20)
         self.rect1 = pygame.Rect(100, 20, 40, 20)
         self.color = (252, 13, 28)
@@ -315,6 +315,7 @@ class ZPiece(Piece):
 
 class JPiece(Piece):
     def __init__(self):
+        super().__init__()
         self.rect = pygame.Rect(80, 20, 60, 20)
         self.rect1 = pygame.Rect(80, 0, 20, 20)
         self.color = (11, 36, 251)
@@ -386,6 +387,7 @@ class JPiece(Piece):
 
 class LPiece(Piece):
     def __init__(self):
+        super().__init__()
         self.rect = pygame.Rect(80, 20, 60, 20)
         self.rect1 = pygame.Rect(120, 0, 20, 20)
         self.color = (253, 164, 41)
