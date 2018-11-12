@@ -2,13 +2,16 @@ from piece_functions.piece import *
 import pygame
 import time
 
+left = (-20, 0)
+right = (20, 0)
+down = (0, 20)
+
 game_clock = time.time()
 moving_clock = time.time()
 
 boundaries = [pygame.Rect(0, 0, 20, 440), pygame.Rect(220, 0, 20, 440), pygame.Rect(20, 420, 240, 20)]
 
 piece_list = ['i', 'o', 't', 's', 'z', 'j', 'l']
-
 pieces_at_bottom = []
 pygame.init()
 screen = pygame.display.set_mode((240, 440))
@@ -31,7 +34,7 @@ while not game_over:
                 if not moving_down:
                     game_clock = time.time()
 
-                current_piece.move_down(boundaries)
+                current_piece.move(boundaries, down)
 
         if current_piece.lock:
             pieces_at_bottom.append(current_piece)
@@ -45,7 +48,7 @@ while not game_over:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 debug = not debug
             if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
-                current_piece.rotate()
+                current_piece.rotate(boundaries)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
                 moving_down = True
             if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
@@ -63,22 +66,20 @@ while not game_over:
         if moving_left:
             if time.time() - moving_clock >= .15:
                 moving_clock = time.time()
-                current_piece.move_left(boundaries)
+                current_piece.move(boundaries, left)
         if moving_right:
             if time.time() - moving_clock >= .15:
                 moving_clock = time.time()
-                current_piece.move_right(boundaries)
+                current_piece.move(boundaries, right)
         if moving_down:
             if time.time() - moving_clock >= .07:
                 moving_clock = time.time()
-                current_piece.move_down(boundaries)
+                current_piece.move(boundaries, down)
 
         screen.fill((0, 0, 0))
         draw_at_bottom(screen, pieces_at_bottom)
         for i in range(len(boundaries)):
             pygame.draw.rect(screen, (255, 255, 255), boundaries[i], 0)
-        # pygame.draw.rect(screen, (255, 255, 255), boundaries[0], 0)
-        # pygame.draw.rect(screen, (255, 255, 255), boundaries[1], 0)
-        # pygame.draw.rect(screen, (255, 255, 255), boundaries[2], 0)
         current_piece.draw(screen)
         pygame.display.flip()
+
