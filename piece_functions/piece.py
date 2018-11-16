@@ -75,12 +75,12 @@ class IPiece(Piece):
                 self.rect2.move_ip(0, 20)
                 self.rect3.move_ip(-20, 40)
                 if not self.collideCheck(boundaries):
-
-                    self.rect.move_ip(-40, 20)
-                    self.rect1.move_ip(-20, 0)
-                    self.rect2.move_ip(0, -20)
-                    self.rect3.move_ip(20, -40)
-                    self.rotate_amount -= 1
+                    if not self.wall_kick(boundaries):
+                        self.rect.move_ip(-40, 20)
+                        self.rect1.move_ip(-20, 0)
+                        self.rect2.move_ip(0, -20)
+                        self.rect3.move_ip(20, -40)
+                        self.rotate_amount -= 1
 
             elif self.rotate_amount % 4 == 1:
                 self.rect.move_ip(20, 40)
@@ -88,12 +88,12 @@ class IPiece(Piece):
                 self.rect2.move_ip(-20, 0)
                 self.rect3.move_ip(-40, -20)
                 if not self.collideCheck(boundaries):
-                    self.wall_kick(boundaries)
-                    # self.rect.move_ip(-20, -40)
-                    # self.rect1.move_ip(0, -20)
-                    # self.rect2.move_ip(20, 0)
-                    # self.rect3.move_ip(40, 20)
-                    # self.rotate_amount -= 1
+                    if not self.wall_kick(boundaries):
+                        self.rect.move_ip(-20, -40)
+                        self.rect1.move_ip(0, -20)
+                        self.rect2.move_ip(20, 0)
+                        self.rect3.move_ip(40, 20)
+                        self.rotate_amount -= 1
 
             elif self.rotate_amount % 4 == 2:
                 self.rect.move_ip(-40, 20)
@@ -122,35 +122,41 @@ class IPiece(Piece):
             self.rotate_amount += 1
 
     def wall_kick(self, boundaries):
-        if not self.collideCheck(boundaries) and self.rotate_amount % 4 == 1:
+        if not self.collideCheck(boundaries) and self.rotate_amount % 4 == 0:
+
             for i in self.rects:
-                i.move_ip(-20, 0)
+                i.move_ip(-40, 0)
             if self.collideCheck(boundaries):
-                return 0
+                return True
             else:
                 for i in self.rects:
-                    i.move_ip(20, 0)
+                    i.move_ip(40, 0)
+
             for i in self.rects:
                 i.move_ip(20, 0)
             if self.collideCheck(boundaries):
-                return 0
+                return True
             else:
                 for i in self.rects:
                     i.move_ip(-20, 0)
+
             for i in self.rects:
                 i.move_ip(-40, 20)
             if self.collideCheck(boundaries):
-                return 0
+                return True
             else:
                 for i in self.rects:
                     i.move_ip(40, -20)
+
             for i in self.rects:
                 i.move_ip(20, -40)
             if self.collideCheck(boundaries):
-                return 0
+                return True
             else:
                 for i in self.rects:
                     i.move_ip(-20, 40)
+
+            return False
 
 
 class OPiece(Piece):
