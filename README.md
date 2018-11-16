@@ -2,9 +2,11 @@
 
 Known Bugs:
 
-~~all boundaries broken when rotating (including pieces)~~
+None
 
 To Do:
+
+Finish wall kick
 
 Add Line Clears
 
