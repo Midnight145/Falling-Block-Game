@@ -12,6 +12,7 @@ moving_clock = time.time()
 boundaries = [pygame.Rect(0, 0, 20, 440), pygame.Rect(220, 0, 20, 440), pygame.Rect(20, 420, 240, 20)]
 
 piece_list = ['i', 'o', 't', 's', 'z', 'j', 'l']
+
 pieces_at_bottom = []
 pygame.init()
 screen = pygame.display.set_mode((240, 440))

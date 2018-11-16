@@ -33,11 +33,7 @@ class Piece:
         for i in self.rects:
             i.move_ip(coords[0], coords[1])
 
-        # I don't know why this works. But, it does. It checks to make sure the piece can move in that direction.
-        if all(-1 == x.collidelist(boundaries) for x in self.rects) \
-                and all(-1 == x.collidelist(things_at_bottom) for x in self.rects):
-            return True
-        else:
+        if not self.collideCheck(boundaries):
             for i in self.rects:
                 # Moves pieces back if it couldn't move it in that direction.
                 i.move_ip(-coords[0], -coords[1])
@@ -45,6 +41,18 @@ class Piece:
                 if coords == (0, 20):
                     things_at_bottom.append(i)
                     self.lock = True
+
+        # I don't know why this works. But, it does. It checks to make sure the piece can move in that direction.
+
+    def collideCheck(self, boundaries):
+        if all(-1 == x.collidelist(boundaries) for x in self.rects) \
+                and all(-1 == x.collidelist(things_at_bottom) for x in self.rects):
+            return True
+        else:
+            return False
+
+    def wall_kick(self, boundaries):
+        pass
 
 
 class IPiece(Piece):
@@ -60,14 +68,14 @@ class IPiece(Piece):
     def rotate(self, boundaries):
 
         if self.rotate_amount > -1:
-
+            print(self.rotate_amount)
             if self.rotate_amount % 4 == 0:
                 self.rect.move_ip(40, -20)
                 self.rect1.move_ip(20, 0)
                 self.rect2.move_ip(0, 20)
                 self.rect3.move_ip(-20, 40)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
+
                     self.rect.move_ip(-40, 20)
                     self.rect1.move_ip(-20, 0)
                     self.rect2.move_ip(0, -20)
@@ -79,21 +87,20 @@ class IPiece(Piece):
                 self.rect1.move_ip(0, 20)
                 self.rect2.move_ip(-20, 0)
                 self.rect3.move_ip(-40, -20)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
-                    self.rect.move_ip(-20, -40)
-                    self.rect1.move_ip(0, -20)
-                    self.rect2.move_ip(20, 0)
-                    self.rect3.move_ip(40, 20)
-                    self.rotate_amount -= 1
+                if not self.collideCheck(boundaries):
+                    self.wall_kick(boundaries)
+                    # self.rect.move_ip(-20, -40)
+                    # self.rect1.move_ip(0, -20)
+                    # self.rect2.move_ip(20, 0)
+                    # self.rect3.move_ip(40, 20)
+                    # self.rotate_amount -= 1
 
             elif self.rotate_amount % 4 == 2:
                 self.rect.move_ip(-40, 20)
                 self.rect1.move_ip(-20, 0)
                 self.rect2.move_ip(0, -20)
                 self.rect3.move_ip(20, -40)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(40, -20)
                     self.rect1.move_ip(20, 0)
                     self.rect2.move_ip(0, 20)
@@ -105,8 +112,7 @@ class IPiece(Piece):
                 self.rect1.move_ip(0, -20)
                 self.rect2.move_ip(20, 0)
                 self.rect3.move_ip(40, 20)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(20, 40)
                     self.rect1.move_ip(0, 20)
                     self.rect2.move_ip(-20, 0)
@@ -114,6 +120,37 @@ class IPiece(Piece):
                     self.rotate_amount -= 1
 
             self.rotate_amount += 1
+
+    def wall_kick(self, boundaries):
+        if not self.collideCheck(boundaries) and self.rotate_amount % 4 == 1:
+            for i in self.rects:
+                i.move_ip(-20, 0)
+            if self.collideCheck(boundaries):
+                return 0
+            else:
+                for i in self.rects:
+                    i.move_ip(20, 0)
+            for i in self.rects:
+                i.move_ip(20, 0)
+            if self.collideCheck(boundaries):
+                return 0
+            else:
+                for i in self.rects:
+                    i.move_ip(-20, 0)
+            for i in self.rects:
+                i.move_ip(-40, 20)
+            if self.collideCheck(boundaries):
+                return 0
+            else:
+                for i in self.rects:
+                    i.move_ip(40, -20)
+            for i in self.rects:
+                i.move_ip(20, -40)
+            if self.collideCheck(boundaries):
+                return 0
+            else:
+                for i in self.rects:
+                    i.move_ip(-20, 40)
 
 
 class OPiece(Piece):
@@ -144,8 +181,7 @@ class TPiece(Piece):
             self.rect.move_ip(20, -20)
             self.rect2.move_ip(-20, 20)
             self.rect3.move_ip(20, 20)
-            if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                    or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+            if not self.collideCheck(boundaries):
                 self.rect.move_ip(-20, 20)
                 self.rect2.move_ip(20, -20)
                 self.rect3.move_ip(-20, -20)
@@ -155,8 +191,7 @@ class TPiece(Piece):
             self.rect.move_ip(20, 20)
             self.rect2.move_ip(-20, -20)
             self.rect3.move_ip(-20, 20)
-            if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                    or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+            if not self.collideCheck(boundaries):
                 self.rect.move_ip(-20, -20)
                 self.rect2.move_ip(20, 20)
                 self.rect3.move_ip(20, -20)
@@ -166,8 +201,7 @@ class TPiece(Piece):
             self.rect.move_ip(-20, 20)
             self.rect2.move_ip(20, -20)
             self.rect3.move_ip(-20, -20)
-            if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                    or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+            if not self.collideCheck(boundaries):
                 self.rect.move_ip(20, -20)
                 self.rect2.move_ip(-20, 20)
                 self.rect3.move_ip(20, 20)
@@ -177,8 +211,7 @@ class TPiece(Piece):
             self.rect.move_ip(-20, -20)
             self.rect2.move_ip(20, 20)
             self.rect3.move_ip(20, -20)
-            if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                    or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+            if not self.collideCheck(boundaries):
                 self.rect.move_ip(20, 20)
                 self.rect2.move_ip(-20, -20)
                 self.rect3.move_ip(-20, 20)
@@ -205,8 +238,7 @@ class SPiece(Piece):
                 self.rect.move_ip(20, 20)
                 self.rect1.move_ip(0, 40)
                 self.rect2.move_ip(20, -20)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(-20, -20)
                     self.rect1.move_ip(0, -40)
                     self.rect2.move_ip(-20, 20)
@@ -216,8 +248,7 @@ class SPiece(Piece):
                 self.rect.move_ip(-20, 20)
                 self.rect1.move_ip(-40, 0)
                 self.rect2.move_ip(20, 20)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(20, -20)
                     self.rect1.move_ip(40, 0)
                     self.rect2.move_ip(-20, -20)
@@ -227,8 +258,7 @@ class SPiece(Piece):
                 self.rect.move_ip(-20, -20)
                 self.rect1.move_ip(0, -40)
                 self.rect2.move_ip(-20, 20)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(20, 20)
                     self.rect1.move_ip(0, 40)
                     self.rect2.move_ip(20, -20)
@@ -238,8 +268,7 @@ class SPiece(Piece):
                 self.rect.move_ip(20, -20)
                 self.rect1.move_ip(40, 0)
                 self.rect2.move_ip(-20, -20)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(-20, 20)
                     self.rect1.move_ip(-40, 0)
                     self.rect2.move_ip(20, 20)
@@ -265,8 +294,7 @@ class ZPiece(Piece):
                 self.rect.move_ip(40, 0)
                 self.rect1.move_ip(20, 20)
                 self.rect3.move_ip(-20, 20)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(-40, 0)
                     self.rect1.move_ip(-20, -20)
                     self.rect3.move_ip(20, -20)
@@ -276,8 +304,7 @@ class ZPiece(Piece):
                 self.rect.move_ip(0, 40)
                 self.rect1.move_ip(-20, 20)
                 self.rect3.move_ip(-20, -20)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(0, -40)
                     self.rect1.move_ip(20, -20)
                     self.rect3.move_ip(20, 20)
@@ -287,8 +314,7 @@ class ZPiece(Piece):
                 self.rect.move_ip(-40, 0)
                 self.rect1.move_ip(-20, -20)
                 self.rect3.move_ip(20, -20)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(40, 0)
                     self.rect1.move_ip(20, 20)
                     self.rect3.move_ip(-20, 20)
@@ -298,8 +324,7 @@ class ZPiece(Piece):
                 self.rect.move_ip(0, -40)
                 self.rect1.move_ip(20, -20)
                 self.rect3.move_ip(20, 20)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(0, 40)
                     self.rect1.move_ip(-20, 20)
                     self.rect3.move_ip(-20, -20)
@@ -326,8 +351,7 @@ class JPiece(Piece):
                 self.rect.move_ip(20, -20)
                 self.rect2.move_ip(-20, 20)
                 self.rect3.move_ip(40, 0)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(-20, 20)
                     self.rect2.move_ip(20, -20)
                     self.rect3.move_ip(-40, 0)
@@ -337,8 +361,7 @@ class JPiece(Piece):
                 self.rect.move_ip(20, 20)
                 self.rect2.move_ip(-20, -20)
                 self.rect3.move_ip(0, 40)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(-20, -20)
                     self.rect2.move_ip(20, 20)
                     self.rect3.move_ip(0, -40)
@@ -348,8 +371,7 @@ class JPiece(Piece):
                 self.rect.move_ip(-20, 20)
                 self.rect2.move_ip(20, -20)
                 self.rect3.move_ip(-40, 0)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(20, -20)
                     self.rect2.move_ip(-20, 20)
                     self.rect3.move_ip(40, 0)
@@ -359,8 +381,7 @@ class JPiece(Piece):
                 self.rect.move_ip(-20, -20)
                 self.rect2.move_ip(20, 20)
                 self.rect3.move_ip(0, -40)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(20, 20)
                     self.rect2.move_ip(-20, -20)
                     self.rect3.move_ip(0, 40)
@@ -387,8 +408,7 @@ class LPiece(Piece):
                 self.rect.move_ip(20, -20)
                 self.rect2.move_ip(-20, 20)
                 self.rect3.move_ip(0, 40)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(-20, 20)
                     self.rect2.move_ip(20, -20)
                     self.rect3.move_ip(0, -40)
@@ -398,8 +418,7 @@ class LPiece(Piece):
                 self.rect.move_ip(20, 20)
                 self.rect2.move_ip(-20, -20)
                 self.rect3.move_ip(-40, 0)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(-20, -20)
                     self.rect2.move_ip(20, 20)
                     self.rect3.move_ip(40, 0)
@@ -409,8 +428,7 @@ class LPiece(Piece):
                 self.rect.move_ip(-20, 20)
                 self.rect2.move_ip(20, -20)
                 self.rect3.move_ip(0, -40)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(20, -20)
                     self.rect2.move_ip(-20, 20)
                     self.rect3.move_ip(0, 40)
@@ -420,8 +438,7 @@ class LPiece(Piece):
                 self.rect.move_ip(-20, -20)
                 self.rect2.move_ip(20, 20)
                 self.rect3.move_ip(40, 0)
-                if any(-1 != x.collidelist(boundaries) for x in self.rects) \
-                        or any(-1 != x.collidelist(things_at_bottom) for x in self.rects):
+                if not self.collideCheck(boundaries):
                     self.rect.move_ip(20, 20)
                     self.rect2.move_ip(-20, -20)
                     self.rect3.move_ip(-40, 0)
